@@ -25,7 +25,7 @@ try:
     username_field.send_keys('peterk')
     
     password_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'password')))
-    password_field.send_keys('password')
+    password_field.send_keys('kfH693FpX9c9')
 
     login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.login-button.ng-tns-c1-0.ng-star-inserted')))
     login_button.click()
@@ -56,6 +56,11 @@ try:
     # Wait for the second div to be clickable and click it
     second_div = WebDriverWait(driver, 120).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-2')))
     second_div.click()
+
+    dropdown = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select.ng-tns-c25-88.ng-untouched.ng-pristine.ng-valid.ng-star-inserted')))
+    dropdown_select = Select(dropdown)
+    desired_option = "Platipus"  # Replace this with the text of the option you want to select
+    dropdown_select.select_by_visible_text(desired_option)
 
 except NoSuchElementException:
     print("Element not found on the page.")
