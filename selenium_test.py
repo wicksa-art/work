@@ -56,11 +56,30 @@ try:
     # Wait for the second div to be clickable and click it
     second_div = WebDriverWait(driver, 120).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-2')))
     second_div.click()
+	
+    time.sleep(1)
 
-    dropdown = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select.ng-tns-c25-88.ng-untouched.ng-pristine.ng-valid.ng-star-inserted')))
-    dropdown_select = Select(dropdown)
-    desired_option = "Platipus"  # Replace this with the text of the option you want to select
-    dropdown_select.select_by_visible_text(desired_option)
+    # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
+    span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
+    span_element.click()
+
+    # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
+    span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
+    driver.execute_script("arguments[0].click();", span_element)
+
+    # After clicking the span element, the mat-options should be visible. 
+    # Wait for the mat-option with id 'mat-option-58' to be clickable, and then click it
+    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-option-58')))
+    driver.execute_script("arguments[0].click();", option_element)
+    
+    time.sleep(1)
+    
+    second_span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-42.ng-star-inserted')))
+    second_span_element.click()
+
+    option_element = WebDriverWait(driver, 240).until(EC.presence_of_element_located((By.ID, 'mat-option-251')))
+    driver.execute_script("arguments[0].click();", option_element)
+
 
 except NoSuchElementException:
     print("Element not found on the page.")
