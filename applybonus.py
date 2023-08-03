@@ -8,11 +8,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 # Make sure a command line argument was given
-if len(sys.argv) < 2:
+if len(sys.argv) < 3:
     print("Please provide a search term as a command line argument.")
     sys.exit()
 
-search_term = sys.argv[1]  # Get the first command line argument
+search_term = sys.argv[1]
+input_text = sys.argv[2]
 
 service = Service(r'C:\Users\kleym\Downloads\chromedriver_win32\chromedriver.exe')
 
@@ -69,17 +70,22 @@ try:
 
     # After clicking the span element, the mat-options should be visible. 
     # Wait for the mat-option with id 'mat-option-58' to be clickable, and then click it
-    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-option-58')))
+    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Platipus']")))
     driver.execute_script("arguments[0].click();", option_element)
-    
+
     time.sleep(1)
-    
+
     second_span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-42.ng-star-inserted')))
     second_span_element.click()
 
-    option_element = WebDriverWait(driver, 240).until(EC.presence_of_element_located((By.ID, 'mat-option-251')))
+    time.sleep(1)
+
+    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
     driver.execute_script("arguments[0].click();", option_element)
 
+    input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
+    input_element.clear()
+    input_element.send_keys(input_text)
 
 except NoSuchElementException:
     print("Element not found on the page.")
