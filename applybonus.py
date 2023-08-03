@@ -1,8 +1,11 @@
+import os
 import sys
 import time
+import json
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -15,16 +18,23 @@ if len(sys.argv) < 3:
 search_term = sys.argv[1]
 input_text = sys.argv[2]
 
-service = Service(r'C:\Users\kleym\Downloads\chromedriver_win32\chromedriver.exe')
+options = Options()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-driver = webdriver.Chrome(service=service)
+service = Service(r'C:\\Users\\kleym\\Downloads\\chromedriver_win32\\chromedriver.exe')
+
+driver = webdriver.Chrome(service=service, options=options)
+
+# Make the window full screen and move it to the second monitor
+driver.set_window_position(-1920, 0)  # adjust coordinates as needed
+driver.maximize_window()
 
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
 
 try:
     username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
     username_field.send_keys('peterk')
-    
+
     password_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'password')))
     password_field.send_keys('kfH693FpX9c9')
 
@@ -49,6 +59,21 @@ try:
     # Wait for the player link to be clickable and click it
     player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
     player_link.click()
+
+    time.sleep(1)
+
+    try:
+        desktop_element = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.fa.fa-desktop.ng-star-inserted')))
+        print('Desktop')
+    except TimeoutException:
+        pass
+
+    # Wait for the mobile icon to appear, print 'Mobile' if it does
+    try:
+        mobile_element = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.fa.fa-mobile-phone.ng-star-inserted')))
+        print('Mobile')
+    except TimeoutException:
+        pass
 
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
