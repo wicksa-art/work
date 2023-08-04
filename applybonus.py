@@ -11,12 +11,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 # Make sure a command line argument was given
-if len(sys.argv) < 3:
+if len(sys.argv) < 2:
     print("Please provide a search term as a command line argument.")
     sys.exit()
 
 search_term = sys.argv[1]
-input_text = sys.argv[2]
 
 options = Options()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -65,7 +64,6 @@ try:
     time.sleep(1)
 
 
-
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
     first_div.click()
@@ -76,9 +74,25 @@ try:
 
     time.sleep(1)
 
-    input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
-    input_element.clear()
-    input_element.send_keys('9')
+
+    # Find the element span with the exact class flag-icon
+    span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
+
+    # Find the element img inside the span
+    img = span.find_element(By.TAG_NAME, "img")
+
+    # Get the src attribute of the img
+    src = img.get_attribute("src")
+
+    # Check if the src contains "assets/flags/fi.svg"
+    if "assets/flags/fi.svg" in src:
+        input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
+        input_element.clear()
+        input_element.send_keys('5')
+    else:
+        input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
+        input_element.clear()
+        input_element.send_keys('9')
 
     input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-3')))
     input_element.clear()
