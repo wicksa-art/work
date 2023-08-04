@@ -31,6 +31,8 @@ driver.maximize_window()
 
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
 
+found_items = [] # Store detected items here
+
 try:
     username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
     username_field.send_keys('peterk')
@@ -62,18 +64,7 @@ try:
 
     time.sleep(1)
 
-    try:
-        desktop_element = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.fa.fa-desktop.ng-star-inserted')))
-        print('Desktop')
-    except TimeoutException:
-        pass
 
-    # Wait for the mobile icon to appear, print 'Mobile' if it does
-    try:
-        mobile_element = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.fa.fa-mobile-phone.ng-star-inserted')))
-        print('Mobile')
-    except TimeoutException:
-        pass
 
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
@@ -105,8 +96,22 @@ try:
 
     time.sleep(1)
 
-    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
-    driver.execute_script("arguments[0].click();", option_element)
+    # Find all elements that match either selector
+    all_elements = driver.find_elements(By.CSS_SELECTOR, 'a.fa.fa-desktop.ng-star-inserted, a.fa.fa-mobile-phone.ng-star-inserted')
+
+    # If there are any matching elements
+    if all_elements:
+        # Get the first one
+        first_element = all_elements[0]
+
+        # Check its classes to determine what it is
+        classes = first_element.get_attribute("class").split(' ')
+        if 'fa-desktop' in classes:
+            option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin']")))
+            driver.execute_script("arguments[0].click();", option_element)
+        elif 'fa-mobile-phone' in classes:
+            option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
+            driver.execute_script("arguments[0].click();", option_element)
 
     input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
     input_element.clear()
