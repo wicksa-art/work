@@ -72,7 +72,6 @@ try:
 except (NoSuchElementException, TimeoutException):
     # If not able to click on player_link, execute this:
     # Clicking on the dropdown
-    print("Account doesn't exist")
     dropdown_button = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.dropdown-toggle.btn.btn-default.btn-block.filter-dropdown')))
     dropdown_button.click()
 

@@ -93,6 +93,8 @@ try:
     else:
         print("No, the currency is not ZAR0.00")
 
+    time.sleep(1)
+
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
     first_div.click()
@@ -109,11 +111,13 @@ try:
     span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
     span_element.click()
 
+    time.sleep(1)
+
     # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
     span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
     driver.execute_script("arguments[0].click();", span_element)
 
-    #insert
+    time.sleep(1)
 
     if ("assets/flags/ca.svg" in src) or ("assets/flags/no.svg" in src):
         option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Spinomenal']")))
@@ -139,7 +143,7 @@ try:
             if 'fa-desktop' in classes:
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Book of Tusk Casino']")))
                 driver.execute_script("arguments[0].click();", option_element)
-            elif 'fa-mobile-phone' in classes:
+            elif ('fa-mobile-phone' in classes) or ([] in classes):
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Book of Tusk Casino_Mobile']")))
                 driver.execute_script("arguments[0].click();", option_element)
 
@@ -160,6 +164,8 @@ try:
 
         # Find all elements that match either selector
         all_elements = driver.find_elements(By.CSS_SELECTOR, 'a.fa.fa-desktop.ng-star-inserted, a.fa.fa-mobile-phone.ng-star-inserted')
+        print(all_elements)
+        time.sleep(1)
 
         # If there are any matching elements
         if all_elements:
@@ -171,7 +177,7 @@ try:
             if 'fa-desktop' in classes:
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin']")))
                 driver.execute_script("arguments[0].click();", option_element)
-            elif 'fa-mobile-phone' in classes:
+            elif ('fa-mobile-phone' in classes) or ([] in classes):
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
                 driver.execute_script("arguments[0].click();", option_element)
 
