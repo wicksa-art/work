@@ -64,40 +64,68 @@ try:
 
     time.sleep(1)
 
+    # Find the td with text Deposits
+    element = driver.find_element("xpath", "//td[text()='Deposits']")
 
+    # Find the next sibling element
+    nextelement = element.find_element("xpath", "following-sibling::*")
+
+    # Check if the text in the next element is ZAR0.00
+    if nextelement.text.strip() == "ZAR0.00":
+        print("Yes, the text is ZAR0.00")
+    else:
+        print("No, the text is not ZAR0.00")
 
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
     first_div.click()
 
     # Wait for the second div to be clickable and click it
-    second_div = WebDriverWait(driver, 120).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-1')))
+    second_div = WebDriverWait(driver, 120).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-2')))
     second_div.click()
+	
+    time.sleep(1)
+
+    # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
+    span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
+    span_element.click()
+
+    # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
+    span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
+    driver.execute_script("arguments[0].click();", span_element)
+
+    # After clicking the span element, the mat-options should be visible. 
+    # Wait for the mat-option with id 'mat-option-58' to be clickable, and then click it
+    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Platipus']")))
+    driver.execute_script("arguments[0].click();", option_element)
 
     time.sleep(1)
 
+    second_span_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-42.ng-star-inserted')))
+    second_span_element.click()
+
+    time.sleep(1)
+
+    # Find all elements that match either selector
+    all_elements = driver.find_elements(By.CSS_SELECTOR, 'a.fa.fa-desktop.ng-star-inserted, a.fa.fa-mobile-phone.ng-star-inserted')
+
+    # If there are any matching elements
+    if all_elements:
+        # Get the first one
+        first_element = all_elements[0]
+
+        # Check its classes to determine what it is
+        classes = first_element.get_attribute("class").split(' ')
+        if 'fa-desktop' in classes:
+            option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin']")))
+            driver.execute_script("arguments[0].click();", option_element)
+        elif 'fa-mobile-phone' in classes:
+            option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
+            driver.execute_script("arguments[0].click();", option_element)
+
     input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
     input_element.clear()
-    input_element.send_keys('9')
-
-    input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-3')))
-    input_element.clear()
-    input_element.send_keys('100')
-
-    input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-4')))
-    input_element.clear()
-    input_element.send_keys('7')
-
-    input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-6')))
-    input_element.clear()
-    input_element.send_keys('Welcome no deposit bonus')
-
-    first_mat = WebDriverWait(driver, 120).until(EC.element_to_be_clickable((By.ID, 'mat-select-3')))
-    first_mat.click()
-
-    option_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Bonus']")))
-    driver.execute_script("arguments[0].click();", option_element)
-
+    input_element.send_keys(input_text)
 
 except NoSuchElementException:
     print("Element not found on the page.")
