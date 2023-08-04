@@ -69,7 +69,7 @@ try:
 
     # Try waiting until the next_element has the text "ZAR0.00"
     try:
-        WebDriverWait(driver, 1).until(EC.text_to_be_present_in_element((By.XPATH, next_element_xpath), "ZAR0.00"))
+        WebDriverWait(driver, 2).until(EC.text_to_be_present_in_element((By.XPATH, next_element_xpath), "ZAR0.00"))
     except TimeoutException:
         pass
 
@@ -80,6 +80,8 @@ try:
         print("Yes, the currency is ZAR0.00")
     else:
         print("No, the currency is not ZAR0.00")
+
+    import pdb; pdb.set_trace()
 
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
@@ -101,8 +103,6 @@ try:
     span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
     driver.execute_script("arguments[0].click();", span_element)
 
-    # After clicking the span element, the mat-options should be visible. 
-    # Wait for the mat-option with id 'mat-option-58' to be clickable, and then click it
     option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Platipus']")))
     driver.execute_script("arguments[0].click();", option_element)
 
