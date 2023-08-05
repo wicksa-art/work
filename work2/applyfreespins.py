@@ -26,7 +26,7 @@ service = Service(r'C:\\Users\\kleym\\Downloads\\chromedriver_win32\\chromedrive
 driver = webdriver.Chrome(service=service, options=options)
 
 # Make the window full screen and move it to the second monitor
-driver.set_window_position(-1920, 0)  # adjust coordinates as needed
+#driver.set_window_position(-1920, 0)  # adjust coordinates as needed
 driver.maximize_window()
 
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
@@ -49,6 +49,9 @@ try:
     search_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[routerlink="/app/core/players/search"]')))
     search_player_link.click()
 
+    #insert
+
+
     # Wait for the input field to be clickable, enter the search term into it
     search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))   
     search_field.click()
@@ -64,7 +67,6 @@ try:
 
     time.sleep(1)
 
-
     #flag
     # Find the element span with the exact class flag-icon
     span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
@@ -74,7 +76,6 @@ try:
 
     # Get the src attribute of the img
     src = img.get_attribute("src")
-
 
     # direct XPath to the next element of deposit_element
     next_element_xpath = "//td[text()='Deposits']/following-sibling::*"
@@ -119,7 +120,7 @@ try:
 
     time.sleep(1)
 
-    if ("assets/flags/ca.svg" in src) or ("assets/flags/no.svg" in src):
+    if ("assets/flags/ca.svg" in src) or ("assets/flags/no.svg" in src) or ("assets/flags/in.svg" in src):
         option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Spinomenal']")))
         driver.execute_script("arguments[0].click();", option_element)
 
@@ -190,4 +191,6 @@ except NoSuchElementException:
 except TimeoutException:
     print("Timeout while waiting for the elements to load on the page.")
 
-time.sleep(100000)  # wait for 100000 seconds before closing
+time.sleep(60)  # wait for 100000 seconds before closing
+
+driver.quit()

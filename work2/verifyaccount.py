@@ -26,7 +26,7 @@ service = Service(r'C:\\Users\\kleym\\Downloads\\chromedriver_win32\\chromedrive
 driver = webdriver.Chrome(service=service, options=options)
 
 # Make the window full screen and move it to the second monitor
-driver.set_window_position(-1920, 0)  # adjust coordinates as needed
+#driver.set_window_position(-1920, 0)  # adjust coordinates as needed
 driver.maximize_window()
 
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
@@ -106,4 +106,4 @@ except NoSuchElementException:
 except TimeoutException:
     print("Timeout while waiting for the elements to load on the page.")
 
-time.sleep(100000)  # wait for 100000 seconds before closing
+time.sleep(360)  # wait for 100000 seconds before closing
