@@ -27,7 +27,7 @@ driver = webdriver.Chrome(service=service, options=options)
 
 # Make the window full screen and move it to the second monitor
 #driver.set_window_position(-1920, 0)  # adjust coordinates as needed
-driver.maximize_window()
+#driver.maximize_window()
 
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
 
