@@ -92,7 +92,7 @@ try:
     src = img.get_attribute("src")
 
     # Check if the src contains "assets/flags/fi.svg"
-    if "assets/flags/fi.svg" in src:
+    if ("assets/flags/fi.svg" in src) or ("assets/flags/jp.svg" in src):
         input_element = WebDriverWait(driver, 240).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
         input_element.clear()
         input_element.send_keys('5')
