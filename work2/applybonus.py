@@ -49,7 +49,13 @@ try:
     search_player_link.click()
 
     #insert
+    # Clicking on the dropdown
+    dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+    dropdown_button.click()
 
+    # Clicking on the span with Email text
+    email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+    email_span.click()
 
     # Wait for the input field to be clickable, enter the search term into it
     search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))   

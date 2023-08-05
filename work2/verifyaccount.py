@@ -79,6 +79,14 @@ except (NoSuchElementException, TimeoutException):
     email_span = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="User Id"]')))
     email_span.click()
 
+    # Clicking on the dropdown
+    dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+    dropdown_button.click()
+
+    # Clicking on the span with Email text
+    email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+    email_span.click()
+
     search_field = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
     search_field.click()
     search_field.clear()
@@ -87,6 +95,8 @@ except (NoSuchElementException, TimeoutException):
     # Wait for the button to be clickable and click it
     success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
     success_button.click()
+
+    time.sleep(1)
 
     player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
     player_link.click()
