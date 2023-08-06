@@ -72,7 +72,7 @@ try:
     player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
     player_link.click()
 
-    time.sleep(1)
+    time.sleep(2)
 
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
@@ -82,7 +82,7 @@ try:
     second_div = WebDriverWait(driver, 120).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-1')))
     second_div.click()
 
-    time.sleep(1)
+    time.sleep(2)
 
     # Find the element span with the exact class flag-icon
     span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")

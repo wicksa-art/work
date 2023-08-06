@@ -73,7 +73,7 @@ try:
     player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
     player_link.click()
 
-    time.sleep(1)
+    time.sleep(2)
 
     #flag
     # Find the element span with the exact class flag-icon
@@ -102,19 +102,19 @@ try:
     else:
         print("No, the currency is not ZAR0.00")
 
-    time.sleep(1)
+    time.sleep(2)
 
     # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
     first_div.click()
 
-    time.sleep(0.5)
+    time.sleep(1)
 
     # Wait for the second div to be clickable and click it
     second_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-2')))
     second_div.click()
 
-    time.sleep(1)
+    time.sleep(2)
 
     # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
     span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
