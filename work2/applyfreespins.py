@@ -9,6 +9,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+import tkinter as tk
+from tkinter import messagebox
 
 # Make sure a command line argument was given
 if len(sys.argv) < 3:
@@ -29,11 +31,23 @@ driver = webdriver.Chrome(service=service, options=options)
 #driver.set_window_position(-1920, 0)  # adjust coordinates as needed
 #driver.maximize_window()
 #driver.minimize_window()
-
-
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
 
 found_items = [] # Store detected items here
+
+def confirm_navigation():
+    # Create a root window but immediately hide it, we just want to show messagebox
+    root = tk.Tk()
+    root.withdraw()
+
+    confirmation = messagebox.askyesno('Confirmation', 'Do you want to navigate to search page?')
+    if confirmation == True:
+        i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
+        driver.execute_script("arguments[0].click();", i_element)
+        driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
+        # Destroy the root window after messagebox is closed
+        root.destroy()
+
 
 try:
     username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
@@ -43,82 +57,64 @@ try:
     password_field.send_keys('kfH693FpX9c9')
 
     login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.login-button.ng-tns-c1-0.ng-star-inserted')))
-    login_button.click()
+    driver.execute_script("arguments[0].click();", login_button)
 
     new_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-target="#sidebar-player-new"]')))
-    new_player_link.click()
+    driver.execute_script("arguments[0].click();", new_player_link)
 
     search_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[routerlink="/app/core/players/search"]')))
-    search_player_link.click()
+    driver.execute_script("arguments[0].click();", search_player_link)
 
     #insert
     # Clicking on the dropdown
     dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
-    dropdown_button.click()
+    driver.execute_script("arguments[0].click();", dropdown_button)
 
     # Clicking on the span with Email text
     email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
-    email_span.click()
+    driver.execute_script("arguments[0].click();", email_span)
 
     # Wait for the input field to be clickable, enter the search term into it
-    search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))   
-    search_field.click()
+    search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
+    driver.execute_script("arguments[0].click();", search_field)
     search_field.send_keys(search_term)
     
     # Wait for the button to be clickable and click it
     success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
-    success_button.click()
+    driver.execute_script("arguments[0].click();", success_button)
 
-    # Wait for the player link to be clickable and click it
     player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
-    player_link.click()
+    driver.execute_script("arguments[0].click();", player_link)
 
     time.sleep(2)
 
     #flag
-    # Find the element span with the exact class flag-icon
     span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
-
-    # Find the element img inside the span
     img = span.find_element(By.TAG_NAME, "img")
-
-    # Get the src attribute of the img
     src = img.get_attribute("src")
-
-    # direct XPath to the next element of deposit_element
     next_element_xpath = "//td[text()='Deposits']/following-sibling::*"
-
-    # Try waiting until the next_element has the text "ZAR0.00"
     try:
         WebDriverWait(driver, 2).until(EC.text_to_be_present_in_element((By.XPATH, next_element_xpath), "ZAR0.00"))
     except TimeoutException:
         pass
-
-    # Then find the next_element and do the comparison
     next_element = driver.find_element(By.XPATH, next_element_xpath)
-
     if next_element.text.strip() == "ZAR0.00":
         print("Yes, the currency is ZAR0.00")
     else:
         print("No, the currency is not ZAR0.00")
 
-    time.sleep(2)
-
-    # Wait for the first div to be clickable and click it
     first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-1-0')))
     first_div.click()
 
-    time.sleep(1)
-
     # Wait for the second div to be clickable and click it
     second_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-3-2')))
-    second_div.click()
+    driver.execute_script("arguments[0].click();", second_div)
 
     time.sleep(2)
 
     # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
     span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
-    span_element.click()
+    driver.execute_script("arguments[0].click();", span_element)
 
     time.sleep(1)
 
@@ -194,11 +190,12 @@ try:
         input_element.clear()
         input_element.send_keys(input_text)
 
+    confirm_navigation()
+
+
 except NoSuchElementException:
     print("Element not found on the page.")
 except TimeoutException:
     print("Timeout while waiting for the elements to load on the page.")
 
-time.sleep(60)  # wait for 100000 seconds before closing
-
-driver.quit()
+time.sleep(60000)  # wait for 100000 seconds before closing
