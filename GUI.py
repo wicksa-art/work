@@ -1,5 +1,21 @@
 import tkinter as tk
 import subprocess
+import os
+import sys
+import time
+import json
+import threading
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from tkinter import messagebox
+from work2 import applyfreespins
+from work2 import applybonus
+
 
 def on_button_click(button_name):
     message = ""
@@ -25,6 +41,9 @@ def on_button_click(button_name):
             try:
                 # Run the applybonus.py script from work2 folder with the provided search term as an argument
                 subprocess.Popen(["python", "work2/applybonus.py", search_term], shell=True)
+                #insert
+                thread = threading.Thread(target=applybonus.applybonus, args=(driver, search_term))
+                thread.start()
                 message = "Press Apply to proceed!"
 
             except FileNotFoundError:
@@ -70,6 +89,8 @@ def on_button_click(button_name):
             try:
                 # Run the applyfreespins.py script from work2 folder with the provided details as arguments
                 subprocess.Popen(["python", "work2/applyfreespins.py", search_term, input_text], shell=True)
+                thread = threading.Thread(target=applyfreespins.applyfreespins, args=(driver, search_term, input_text))
+                thread.start()
                 message = "Press Apply to proceed!"
 
             except FileNotFoundError:
@@ -142,6 +163,35 @@ buttons = ["Apply Bonus", "Apply Free Spins", "Verify Account", "Closure"]
 for button_name in buttons:
     button = tk.Button(root, text=button_name, command=lambda name=button_name: on_button_click(name))
     button.pack()
+
+options = Options()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+service = Service(r'C:\\Users\\kleym\\Downloads\\chromedriver_win32\\chromedriver.exe')
+
+driver = webdriver.Chrome(service=service, options=options)
+driver.get('https://core.altbetexchange.com/core/#/login/staff')
+
+username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
+username_field.send_keys('peterk')
+
+password_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'password')))
+password_field.send_keys('kfH693FpX9c9')
+
+login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.login-button.ng-tns-c1-0.ng-star-inserted')))
+driver.execute_script("arguments[0].click();", login_button)
+
+new_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-target="#sidebar-player-new"]')))
+driver.execute_script("arguments[0].click();", new_player_link)
+
+search_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[routerlink="/app/core/players/search"]')))
+driver.execute_script("arguments[0].click();", search_player_link)
+
+dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+driver.execute_script("arguments[0].click();", dropdown_button)
+
+email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+driver.execute_script("arguments[0].click();", email_span)
 
 label = tk.Label(root, text="")
 label.pack()

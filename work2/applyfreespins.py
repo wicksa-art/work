@@ -27,8 +27,6 @@ def applyfreespins(driver, search_term, input_text):
     search_field.clear()
     search_field.send_keys(search_term)
 
-    time.sleep(2)
-
     # Wait for the button to be clickable and click it
     success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
     driver.execute_script("arguments[0].click();", success_button)
@@ -65,13 +63,7 @@ def applyfreespins(driver, search_term, input_text):
     time.sleep(2)
 
     # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
-    span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
-    driver.execute_script("arguments[0].click();", span_element)
-
-    time.sleep(1)
-
-    # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
-    span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-40.ng-star-inserted')))
+    span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a subProduct']")))
     driver.execute_script("arguments[0].click();", span_element)
 
     time.sleep(1)
@@ -82,7 +74,7 @@ def applyfreespins(driver, search_term, input_text):
 
         time.sleep(1)
 
-        second_span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-42.ng-star-inserted')))
+        second_span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a game']")))
         second_span_element.click()
 
         time.sleep(1)
@@ -114,7 +106,7 @@ def applyfreespins(driver, search_term, input_text):
 
         time.sleep(1)
 
-        second_span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.mat-select-placeholder.ng-tns-c25-42.ng-star-inserted')))
+        second_span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a game']")))
         second_span_element.click()
 
         time.sleep(1)
@@ -137,6 +129,7 @@ def applyfreespins(driver, search_term, input_text):
             elif ('fa-mobile-phone' in classes) or ([] in classes):
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
                 driver.execute_script("arguments[0].click();", option_element)
+
 
         input_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
         input_element.clear()
