@@ -15,6 +15,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from tkinter import messagebox
 from work2 import applyfreespins
 from work2 import applybonus
+from work2 import verifyaccount
 
 
 def on_button_click(button_name):
@@ -137,6 +138,8 @@ def on_button_click(button_name):
             try:
                 # Run the verifyaccount.py script from work2 folder with the provided details as arguments
                 subprocess.Popen(["python", "work2/verifyaccount.py", email_term, search_term], shell=True)
+                thread = threading.Thread(target=verifyaccount.verifyaccount, args=(driver, email_term, search_term))
+                thread.start()
                 message = "Check answer and proceed!"
 
             except FileNotFoundError:

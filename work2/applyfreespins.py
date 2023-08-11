@@ -139,10 +139,12 @@ def applyfreespins(driver, search_term, input_text):
 
     confirmation = messagebox.askyesno('Confirmation', 'Do you want to navigate to search page?')
     if confirmation == True:
-        i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
-        driver.execute_script("arguments[0].click();", i_element)
+        try:
+            i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
+            driver.execute_script("arguments[0].click();", i_element)
+        except NoSuchElementException:
+            print("i_element not found on webpage")
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
-        # Destroy the root window after messagebox is closed
         root.destroy()
 
 

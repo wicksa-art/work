@@ -69,8 +69,11 @@ def applybonus(driver, search_term):
     root.withdraw()
     confirmation = messagebox.askyesno('Confirmation', 'Do you want to navigate to search page?')
     if confirmation == True:
-        i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
-        i_element.click()
+        try:
+            i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
+            driver.execute_script("arguments[0].click();", i_element)
+        except NoSuchElementException:
+            print("i_element not found on webpage")
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         root.destroy()
 
