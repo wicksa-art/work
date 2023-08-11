@@ -62,6 +62,11 @@ def applyfreespins(driver, search_term, input_text):
 
     time.sleep(2)
 
+    input_element = driver.find_element(By.CSS_SELECTOR, 'input[matinput][required]')
+    input_element.click()
+    input_element.clear()
+    input_element.send_keys(input_text)
+
     # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
     span_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a subProduct']")))
     driver.execute_script("arguments[0].click();", span_element)
@@ -96,10 +101,6 @@ def applyfreespins(driver, search_term, input_text):
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Book of Tusk Casino_Mobile']")))
                 driver.execute_script("arguments[0].click();", option_element)
 
-        input_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
-        input_element.clear()
-        input_element.send_keys(input_text)
-
     else:
         option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Platipus']")))
         driver.execute_script("arguments[0].click();", option_element)
@@ -110,6 +111,7 @@ def applyfreespins(driver, search_term, input_text):
         second_span_element.click()
 
         time.sleep(1)
+
 
         # Find all elements that match either selector
         all_elements = driver.find_elements(By.CSS_SELECTOR, 'a.fa.fa-desktop.ng-star-inserted, a.fa.fa-mobile-phone.ng-star-inserted')
@@ -130,10 +132,6 @@ def applyfreespins(driver, search_term, input_text):
                 option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
                 driver.execute_script("arguments[0].click();", option_element)
 
-
-        input_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-input-2')))
-        input_element.clear()
-        input_element.send_keys(input_text)
 
     # Create a root window but immediately hide it, we just want to show messagebox
     root = tk.Tk()
