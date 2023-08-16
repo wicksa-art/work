@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import json
+import pyperclip
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -88,6 +89,8 @@ def verifyaccount(driver, email_term, search_term):
             try:
                 i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
                 driver.execute_script("arguments[0].click();", i_element)
+                text_to_copy = "Done, I've sent you another activation email, make sure to check junk/spam folder\nAlso I would like to remind you that there is a 125% bonus and up to 100 free spins on your first deposit\nAnything else I can help you with?"
+                pyperclip.copy(text_to_copy)
             except NoSuchElementException:
                 print("i_element not found on webpage")
             driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')

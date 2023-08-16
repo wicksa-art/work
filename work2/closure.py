@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import json
+import pyperclip
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -9,86 +10,64 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.keys import Keys
+import tkinter as tk
+from tkinter import messagebox
 
-# Make sure a command line argument was given
-if len(sys.argv) < 2:
-    print("Please provide a search term as a command line argument.")
-    sys.exit()
+def closure(driver, search_term):
 
-search_term = sys.argv[1]
-
-options = Options()
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
-
-service = Service(r'C:\\Users\\kleym\\Downloads\\chromedriver_win32\\chromedriver.exe')
-
-driver = webdriver.Chrome(service=service, options=options)
-
-
-#driver.minimize_window()
-# Make the window full screen and move it to the second monitor
-#driver.set_window_position(-1920, 0)  # adjust coordinates as needed
-#driver.maximize_window()
-
-driver.get('https://core.altbetexchange.com/core/#/login/staff')
-
-found_items = [] # Store detected items here
-
-try:
-    username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
-    username_field.send_keys('peterk')
-
-    password_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'password')))
-    password_field.send_keys('kfH693FpX9c9')
-
-    login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.login-button.ng-tns-c1-0.ng-star-inserted')))
-    login_button.click()
-
-    new_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-target="#sidebar-player-new"]')))
-    new_player_link.click()
-
-    search_player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[routerlink="/app/core/players/search"]')))
-    search_player_link.click()
-
-    #insert
-    # Clicking on the dropdown
-    dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
-    dropdown_button.click()
-
-    # Clicking on the span with Email text
-    email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
-    email_span.click()
-
-    # Wait for the input field to be clickable, enter the search term into it
-    search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))   
+    search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
     search_field.click()
+    search_field.clear()
     search_field.send_keys(search_term)
-    
-    # Wait for the button to be clickable and click it
+
     success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
     success_button.click()
-
-    # Wait for the player link to be clickable and click it
-    player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
-    player_link.click()
-
     time.sleep(1)
 
-    element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//td[contains(@class, 'text-xs-right') and contains(., 'NOT_LOCKED')]/following-sibling::td"))
-        )
-        # Find the i element within this td and click it
-    i_element = element.find_element_by_class_name('fa-pencil-square-o')
-    i_element.click()
+    player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
+    player_link.click()
+    time.sleep(2)
 
-    element = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'btn') and contains(@class, 'btn-secondary') and contains(@class, 'filter-dropdown')]"))
-    )
-    element.click()
+    elementi = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.fa.fa-pencil-square-o.ng-star-inserted')))
+    elementi.click()
 
-except NoSuchElementException:
-    print("Element not found on the page.")
-except TimeoutException:
-    print("Timeout while waiting for the elements to load on the page.")
+    dropdownbutton = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-secondary.filter-dropdown')))
+    dropdownbutton.click()
 
-time.sleep(60)  # wait for 100000 seconds before closing
+    locka = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//a[text()="Permanent Lock"]')))
+    locka.click()
+
+    buttons = driver.find_elements(By.CLASS_NAME, "btn.btn-secondary.filter-dropdown")
+    if len(buttons) >= 2:
+        second_button = buttons[1]  # Second button
+        second_button.click()
+    else:
+        print("There are not enough buttons with the specified class.")
+
+    lockr = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//a[text()=" Customer Request (CUSTOMER_REQUEST) "]')))
+    lockr.click()
+
+    reasontext = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'changeLockStatusComment')))
+    reasontext.click()
+    reasontext.send_keys("Account closure request")
+    #make confirmation and then insert comment as well
+
+    # Create a root window but immediately hide it, we just want to show messagebox
+    root = tk.Tk()
+    root.withdraw()
+
+    confirmation = messagebox.askyesno('Confirmation', 'Do you want to navigate to search page?')
+    if confirmation == True:
+        try:
+            i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
+            driver.execute_script("arguments[0].click();", i_element)
+            text_to_copy = "Your account is closed" \
+                           "Have a great day!"
+            pyperclip.copy(text_to_copy)
+        except NoSuchElementException:
+            print("i_element not found on webpage")
+        driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
+        root.destroy()
+
+    pass

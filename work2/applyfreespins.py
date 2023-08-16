@@ -133,6 +133,7 @@ def applyfreespins(driver, search_term, input_text):
                 driver.execute_script("arguments[0].click();", option_element)
 
 
+
     # Create a root window but immediately hide it, we just want to show messagebox
     root = tk.Tk()
     root.withdraw()

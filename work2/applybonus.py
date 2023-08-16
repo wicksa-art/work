@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import pyperclip
 import json
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -72,6 +73,8 @@ def applybonus(driver, search_term):
         try:
             i_element = driver.find_element(By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")
             driver.execute_script("arguments[0].click();", i_element)
+            text_to_copy = "Your bonus has been added to your account. Enjoy!\nAlso I would like to remind you that there is a 125% bonus and up to 100 free spins on your first deposit.\nAnything else I can help you with?"
+            pyperclip.copy(text_to_copy)
         except NoSuchElementException:
             print("i_element not found on webpage")
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')

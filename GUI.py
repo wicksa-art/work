@@ -16,6 +16,7 @@ from tkinter import messagebox
 from work2 import applyfreespins
 from work2 import applybonus
 from work2 import verifyaccount
+from work2 import closure
 
 
 def on_button_click(button_name):
@@ -156,6 +157,47 @@ def on_button_click(button_name):
 
         # Set the focus on the first input field
         email_entry.focus_set()
+
+    elif button_name == "Closure":
+        # Create a new window to get the search term from the user
+        term_window = tk.Toplevel(root)
+        term_window.title("Enter Search Term")
+
+        # Entry widget to get the search term
+        term_label = tk.Label(term_window, text="Enter username:")
+        term_label.grid(row=0, column=0, columnspan=2)
+        search_entry = tk.Entry(term_window)
+        search_entry.grid(row=1, column=0, columnspan=2)
+
+        # Function to handle the OK button click in the new window
+        def on_ok_click():
+            if not search_entry.get():
+                return  # Do nothing if the search term is empty
+
+            search_term = search_entry.get()
+            term_window.destroy()
+
+            try:
+                # Run the closure.py script from work2 folder with the provided search term as an argument
+                subprocess.Popen(["python", "work2/closure.py", search_term], shell=True)
+                #insert
+                thread = threading.Thread(target=closure.closure, args=(driver, search_term))
+                thread.start()
+                message = "Press Apply to proceed!"
+
+            except FileNotFoundError:
+                message = "Error: closure.py not found in work2 folder."
+
+            label.config(text=message)
+
+        ok_button = tk.Button(term_window, text="OK", command=on_ok_click)
+        ok_button.grid(row=2, column=0, columnspan=2)
+
+        # Bind the Enter key press event to the on_ok_click function
+        search_entry.bind('<Return>', lambda event: on_ok_click())
+
+        # Set the focus on the input field
+        search_entry.focus_set()
 
 root = tk.Tk()
 root.title("User Input App")
