@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['GUI.py'],
+    ['gui.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='GUI',
+    name='gui',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

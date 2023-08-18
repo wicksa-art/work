@@ -1,9 +1,5 @@
 import tkinter as tk
 import subprocess
-import os
-import sys
-import time
-import json
 import threading
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -11,8 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from tkinter import messagebox
 from work2 import applyfreespins
 from work2 import applybonus
 from work2 import verifyaccount
@@ -237,8 +231,6 @@ driver.execute_script("arguments[0].click();", dropdown_button)
 
 email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
 driver.execute_script("arguments[0].click();", email_span)
-
 label = tk.Label(root, text="")
 label.pack()
-
 root.mainloop()
