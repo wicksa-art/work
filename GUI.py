@@ -33,10 +33,11 @@ def on_button_click(button_name):
             if not search_entry.get():
                 return
             search_term = search_entry.get()
+            bonus_type = selected_option.get()
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/applybonus.py", search_term], shell=True)
-                thread = threading.Thread(target=applybonus.applybonus, args=(driver, search_term))
+                subprocess.Popen(["python", "work2/applybonus.py", search_term, bonus_type], shell=True)
+                thread = threading.Thread(target=applybonus.applybonus, args=(driver, search_term, bonus_type))
                 thread.start()
                 message = "Press Apply to proceed!"
             except FileNotFoundError:
