@@ -23,12 +23,6 @@ def on_button_click(button_name):
         term_label.grid(row=0, column=0, columnspan=2)
         search_entry = tk.Entry(term_window)
         search_entry.grid(row=1, column=0, columnspan=2)
-        combo_label = tk.Label(term_window, text="Select a bonus type:")
-        combo_label.grid(row=2, column=0, columnspan=2)
-        selected_option = tk.StringVar()
-        combo = ttk.Combobox(term_window, textvariable=selected_option)
-        combo['values'] = ["Welcome bonus", "Cashback", "Reload bonus"]
-        combo.grid(row=3, column=0, columnspan=2)
         def on_ok_click():
             if not search_entry.get():
                 return
@@ -43,7 +37,7 @@ def on_button_click(button_name):
                 message = "Error: applybonus.py not found in work2 folder."
             label.config(text=message)
         ok_button = tk.Button(term_window, text="OK", command=on_ok_click)
-        ok_button.grid(row=4, column=0, columnspan=2)
+        ok_button.grid(row=2, column=0, columnspan=2)
         search_entry.bind('<Return>', lambda event: on_ok_click())
         search_entry.focus_set()
     elif button_name == "Apply Free Spins":
