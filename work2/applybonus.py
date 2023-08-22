@@ -25,7 +25,7 @@ def applybonus(driver, search_term):
 
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         player_link.click()
-        time.sleep(2)
+        time.sleep(3)
         span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
         img = span.find_element(By.TAG_NAME, "img")
         src = img.get_attribute("src")
