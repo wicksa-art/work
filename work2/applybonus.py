@@ -21,7 +21,7 @@ def applybonus(driver, search_term):
         success_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         success_button.click()
-        time.sleep(1)
+        time.sleep(2)
 
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         player_link.click()
