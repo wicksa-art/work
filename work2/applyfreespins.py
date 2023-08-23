@@ -47,7 +47,7 @@ def applyfreespins(driver, search_term, input_text):
         driver.execute_script("arguments[0].click();", first_div)
         second_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' Free Round ']")))
         driver.execute_script("arguments[0].click();", second_div)
-        time.sleep(2)
+        time.sleep(3)
         input_element = driver.find_element(By.CSS_SELECTOR, 'input[matinput][required]')
         input_element.click()
         input_element.clear()
