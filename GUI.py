@@ -133,7 +133,7 @@ for button_name in buttons:
     button.pack()
 options = Options()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-service = Service(r'C:\\Users\\kleym\\Downloads\\chromedriver_win32\\chromedriver.exe')
+service = Service(r'C:\\Users\\kleym\\Documents\\GitHub\\scripts\\chromedriver-win32\\chromedriver.exe')
 driver = webdriver.Chrome(service=service, options=options)
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
 username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
