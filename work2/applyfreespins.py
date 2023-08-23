@@ -15,27 +15,20 @@ def applyfreespins(driver, search_term, input_text):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
         time.sleep(1)
-    except TimeoutException:
-
+    except:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         search_field.click()
         search_field.clear()
         search_field.send_keys(search_term)
-
-        # Wait for the button to be clickable and click it
         success_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         driver.execute_script("arguments[0].click();", success_button)
-
         time.sleep(2)
-
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
-
         time.sleep(2)
-
         # flag
         span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
         img = span.find_element(By.TAG_NAME, "img")
@@ -50,51 +43,32 @@ def applyfreespins(driver, search_term, input_text):
             print("Yes, the currency is ZAR0.00")
         else:
             print("No, the currency is not ZAR0.00")
-
         first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' APPLY BONUS ']")))
-        first_div.click()
-
-        # Wait for the second div to be clickable and click it
+        driver.execute_script("arguments[0].click();", first_div)
         second_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' Free Round ']")))
         driver.execute_script("arguments[0].click();", second_div)
-
         time.sleep(2)
-
         input_element = driver.find_element(By.CSS_SELECTOR, 'input[matinput][required]')
         input_element.click()
         input_element.clear()
         input_element.send_keys(input_text)
-
-        # Wait for the span with class 'mat-select-placeholder ng-tns-c25-40 ng-star-inserted' to be clickable and click it
         span_element = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a subProduct']")))
         driver.execute_script("arguments[0].click();", span_element)
-
         time.sleep(1)
-
         if ("assets/flags/ca.svg" in src) or ("assets/flags/no.svg" in src) or ("assets/flags/in.svg" in src):
             option_element = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Spinomenal']")))
             driver.execute_script("arguments[0].click();", option_element)
-
             time.sleep(1)
-
             second_span_element = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a game']")))
             second_span_element.click()
-
             time.sleep(1)
-
-            # Find all elements that match either selector
             all_elements = driver.find_elements(By.CSS_SELECTOR,
                                                 'a.fa.fa-desktop.ng-star-inserted, a.fa.fa-mobile-phone.ng-star-inserted')
-
-            # If there are any matching elements
             if all_elements:
-                # Get the first one
                 first_element = all_elements[0]
-
-                # Check its classes to determine what it is
                 classes = first_element.get_attribute("class").split(' ')
                 if 'fa-desktop' in classes:
                     option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(

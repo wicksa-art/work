@@ -13,8 +13,9 @@ def verifyaccount(driver, email_term, search_term):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
         time.sleep(1)
-    except TimeoutException:
+    except:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
+        time.sleep(1)
         search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         search_field.click()
         search_field.clear()
@@ -26,8 +27,8 @@ def verifyaccount(driver, email_term, search_term):
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         player_link.click()
         time.sleep(1)
-    first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'mat-tab-label-2-9')))
-    first_div.click()
+    first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' FULL PROFILE ']")))
+    driver.execute_script("arguments[0].click();", first_div)
     second_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//i[contains(@class, "fa fa-question-circle")]/following::div[contains(@class, "ng-star-inserted")][1]')))
     second_div.click()
     email_change = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'profileEmail')))

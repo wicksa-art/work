@@ -11,7 +11,7 @@ def applybonus(driver, search_term):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
         time.sleep(1)
-    except TimeoutException:
+    except:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
@@ -29,7 +29,7 @@ def applybonus(driver, search_term):
         img = span.find_element(By.TAG_NAME, "img")
         src = img.get_attribute("src")
         first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' APPLY BONUS ']")))
-        first_div.click()
+        driver.execute_script("arguments[0].click();", first_div)
         second_div = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//div[text()=' Manual Bonus ']")))
         driver.execute_script("arguments[0].click();", second_div)
