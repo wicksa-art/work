@@ -20,10 +20,9 @@ def verifyaccount(driver, email_term, search_term):
         search_field.click()
         search_field.clear()
         search_field.send_keys(search_term)
-        # Wait for the button to be clickable and click it
         success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         success_button.click()
-        time.sleep(1)
+        time.sleep(2)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         player_link.click()
         time.sleep(1)
