@@ -16,14 +16,14 @@ def closure(driver, search_term):
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
-        search_field.click()
+        driver.execute_script("arguments[0].click();", search_field)
         search_field.clear()
         search_field.send_keys(search_term)
         success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
-        success_button.click()
+        driver.execute_script("arguments[0].click();", success_button)
         time.sleep(1)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
-        player_link.click()
+        driver.execute_script("arguments[0].click();", player_link)
         time.sleep(2)
         elementi = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.fa.fa-pencil-square-o.ng-star-inserted')))
         driver.execute_script("arguments[0].click();", elementi)
@@ -34,13 +34,13 @@ def closure(driver, search_term):
         buttons = driver.find_elements(By.CLASS_NAME, "btn.btn-secondary.filter-dropdown")
         if len(buttons) >= 2:
             second_button = buttons[1]  # Second button
-            second_button.click()
+            driver.execute_script("arguments[0].click();", second_button)
         else:
             print("There are not enough buttons with the specified class.")
         lockr = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//a[text()=" Customer Request (CUSTOMER_REQUEST) "]')))
-        lockr.click()
+        driver.execute_script("arguments[0].click();", lockr)
         reasontext = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'changeLockStatusComment')))
-        reasontext.click()
+        driver.execute_script("arguments[0].click();", reasontext)
         reasontext.send_keys("Account closure request")
         text_to_copy = "Your account is closed\nHave a great day!"
         pyperclip.copy(text_to_copy)

@@ -14,16 +14,16 @@ def applybonus(driver, search_term, bonus_type):
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
-        search_field.click()
+        driver.execute_script("arguments[0].click();", search_field)
         search_field.clear()
         search_field.send_keys(search_term)
         success_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
-        success_button.click()
-        time.sleep(2)
+        driver.execute_script("arguments[0].click();", success_button)
+        time.sleep(1)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
-        player_link.click()
-        time.sleep(3)
+        driver.execute_script("arguments[0].click();", player_link)
+        time.sleep(2)
         span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
         img = span.find_element(By.TAG_NAME, "img")
         src = img.get_attribute("src")
@@ -58,7 +58,7 @@ def applybonus(driver, search_term, bonus_type):
             input_element.send_keys('Welcome no deposit bonus')
             element_to_click = driver.find_element(By.XPATH, '//mat-label[text()="Select Transaction Tag"]')
             parent_div = element_to_click.find_element(By.XPATH, '../../..')
-            parent_div.click()
+            driver.execute_script("arguments[0].click();", parent_div)
             option_element = WebDriverWait(driver, 240).until(
                 EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Bonus']")))
             driver.execute_script("arguments[0].click();", option_element)
@@ -78,7 +78,7 @@ def applybonus(driver, search_term, bonus_type):
             input_element.send_keys('cashback')
             element_to_click = driver.find_element(By.XPATH, '//mat-label[text()="Select Transaction Tag"]')
             parent_div = element_to_click.find_element(By.XPATH, '../../..')
-            parent_div.click()
+            driver.execute_script("arguments[0].click();", parent_div)
             option_element = WebDriverWait(driver, 240).until(
                 EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='CashBack']")))
             driver.execute_script("arguments[0].click();", option_element)
@@ -98,7 +98,7 @@ def applybonus(driver, search_term, bonus_type):
             input_element.send_keys('Deposit bonus')
             element_to_click = driver.find_element(By.XPATH, '//mat-label[text()="Select Transaction Tag"]')
             parent_div = element_to_click.find_element(By.XPATH, '../../..')
-            parent_div.click()
+            driver.execute_script("arguments[0].click();", parent_div)
             option_element = WebDriverWait(driver, 240).until(
                 EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Bonus']")))
             driver.execute_script("arguments[0].click();", option_element)
