@@ -12,16 +12,14 @@ def verifyaccount(driver, email_term, search_term):
         i_element = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
-        time.sleep(1)
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
-        search_field.click()
+        driver.execute_script("arguments[0].click();", search_field)
         search_field.clear()
         search_field.send_keys(search_term)
         success_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
-        success_button.click()
-        time.sleep(1)
+        driver.execute_script("arguments[0].click();", success_button)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
         time.sleep(1)
