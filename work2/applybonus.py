@@ -3,15 +3,14 @@ import pyperclip
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
 found_items = []  # Store detected items here
 def applybonus(driver, search_term, bonus_type):
     try:
         i_element = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
-        time.sleep(1)
     except:
+        time.sleep(1)
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
@@ -81,7 +80,7 @@ def applybonus(driver, search_term, bonus_type):
             parent_div = element_to_click.find_element(By.XPATH, '../../..')
             parent_div.click()
             option_element = WebDriverWait(driver, 240).until(
-                EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()=' CashBack ']")))
+                EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='CashBack']")))
             driver.execute_script("arguments[0].click();", option_element)
             text_to_copy = "Your cashback has been added to your account. Enjoy!\nAnything else I can help you with?"
             pyperclip.copy(text_to_copy)
@@ -105,4 +104,4 @@ def applybonus(driver, search_term, bonus_type):
             driver.execute_script("arguments[0].click();", option_element)
             text_to_copy = "Your bonus has been added to your account. Enjoy!\nAnything else I can help you with?"
             pyperclip.copy(text_to_copy)
-        pass
+    pass
