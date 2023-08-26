@@ -13,7 +13,7 @@ def closure(driver, search_term):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
         time.sleep(1)
-    except:
+    finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         search_field.click()
@@ -26,11 +26,11 @@ def closure(driver, search_term):
         player_link.click()
         time.sleep(2)
         elementi = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.fa.fa-pencil-square-o.ng-star-inserted')))
-        elementi.click()
+        driver.execute_script("arguments[0].click();", elementi)
         dropdownbutton = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-secondary.filter-dropdown')))
-        dropdownbutton.click()
+        driver.execute_script("arguments[0].click();", dropdownbutton)
         locka = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//a[text()="Permanent Lock"]')))
-        locka.click()
+        driver.execute_script("arguments[0].click();", locka)
         buttons = driver.find_elements(By.CLASS_NAME, "btn.btn-secondary.filter-dropdown")
         if len(buttons) >= 2:
             second_button = buttons[1]  # Second button
