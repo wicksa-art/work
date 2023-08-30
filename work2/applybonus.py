@@ -104,4 +104,29 @@ def applybonus(driver, search_term, bonus_type):
             driver.execute_script("arguments[0].click();", option_element)
             text_to_copy = "Your bonus has been added to your account. Enjoy!\nAnything else I can help you with?"
             pyperclip.copy(text_to_copy)
+        elif bonus_type == "SA CALL CENTER":
+            input_element = WebDriverWait(driver, 240).until(
+                EC.element_to_be_clickable((By.XPATH, "//input [@formcontrolname='amount']")))
+            input_element.clear()
+            input_element.send_keys('200')
+            input_element = WebDriverWait(driver, 240).until(
+                EC.element_to_be_clickable((By.XPATH, "//input [@formcontrolname='wagerRequirement']")))
+            input_element.clear()
+            input_element.send_keys('100')
+            input_element = WebDriverWait(driver, 240).until(
+                EC.element_to_be_clickable((By.XPATH, "//input [@formcontrolname='expires']")))
+            input_element.clear()
+            input_element.send_keys('7')
+            input_element = WebDriverWait(driver, 240).until(
+                EC.element_to_be_clickable((By.XPATH, "//textarea [@formcontrolname='comment']")))
+            input_element.clear()
+            input_element.send_keys('SA CALL CENTER')
+            element_to_click = driver.find_element(By.XPATH, '//mat-label[text()="Select Transaction Tag"]')
+            parent_div = element_to_click.find_element(By.XPATH, '../../..')
+            driver.execute_script("arguments[0].click();", parent_div)
+            option_element = WebDriverWait(driver, 240).until(
+                EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Bonus']")))
+            driver.execute_script("arguments[0].click();", option_element)
+            text_to_copy = "Your bonus has been added to your account. Enjoy!\nAnything else I can help you with?"
+            pyperclip.copy(text_to_copy)
     pass

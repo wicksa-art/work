@@ -28,7 +28,7 @@ def on_button_click(button_name):
         bonus_label.grid(row=2, column=0, columnspan=2)
 
         # Add a dropdown list with bonus options
-        bonus_options = ["Welcome bonus", "Cashback", "Bonus"]
+        bonus_options = ["Welcome bonus", "Cashback", "Bonus", "SA CALL CENTER"]
         bonus_combobox = ttk.Combobox(term_window, values=bonus_options)
         bonus_combobox.grid(row=3, column=0, columnspan=2)
 
@@ -92,6 +92,7 @@ def on_button_click(button_name):
         term_label2.grid(row=1, column=0)
         search_entry = tk.Entry(term_window)
         search_entry.grid(row=1, column=1)
+
         def on_ok_click():
             email_term = email_entry.get()
             search_term = search_entry.get()
