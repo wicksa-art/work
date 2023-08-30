@@ -15,6 +15,8 @@ def applyfreespins(driver, search_term, input_text):
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
         driver.execute_script("arguments[0].click();", i_element)
         time.sleep(1)
+    except TimeoutException:
+        print("X not found on page")
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
         search_field = WebDriverWait(driver, 10).until(
@@ -25,10 +27,10 @@ def applyfreespins(driver, search_term, input_text):
         success_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         driver.execute_script("arguments[0].click();", success_button)
-        time.sleep(1)
+        time.sleep(2)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
-        time.sleep(3)
+        time.sleep(2)
         # flag
         span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
         img = span.find_element(By.TAG_NAME, "img")

@@ -86,12 +86,12 @@ def on_button_click(button_name):
         term_window.title("Enter Account Details")
         term_label1 = tk.Label(term_window, text="Enter username:")
         term_label1.grid(row=0, column=0)
-        email_entry = tk.Entry(term_window)
-        email_entry.grid(row=0, column=1)
+        search_entry = tk.Entry(term_window)
+        search_entry.grid(row=0, column=1)
         term_label2 = tk.Label(term_window, text="Enter email:")
         term_label2.grid(row=1, column=0)
-        search_entry = tk.Entry(term_window)
-        search_entry.grid(row=1, column=1)
+        email_entry = tk.Entry(term_window)
+        email_entry.grid(row=1, column=1)
         # Add a label for the new dropdown list
         verify_label = tk.Label(term_window, text="Select verify type:")
         verify_label.grid(row=2, column=0, columnspan=2)
@@ -109,7 +109,7 @@ def on_button_click(button_name):
             term_window.destroy()
             try:
                 subprocess.Popen(["python", "work2/verifyaccount.py", search_term, email_term, verify_type], shell=True)
-                thread = threading.Thread(target=verifyaccount.verifyaccount, args=(driver, email_term, search_term, verify_type))
+                thread = threading.Thread(target=verifyaccount.verifyaccount, args=(driver, search_term, email_term, verify_type))
                 thread.start()
                 message = "Check answer and proceed!"
             except FileNotFoundError:
