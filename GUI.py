@@ -84,34 +84,42 @@ def on_button_click(button_name):
     elif button_name == "Verify Account":
         term_window = tk.Toplevel(root)
         term_window.title("Enter Account Details")
-        term_label1 = tk.Label(term_window, text="Enter email:")
+        term_label1 = tk.Label(term_window, text="Enter username:")
         term_label1.grid(row=0, column=0)
         email_entry = tk.Entry(term_window)
         email_entry.grid(row=0, column=1)
-        term_label2 = tk.Label(term_window, text="Enter username:")
+        term_label2 = tk.Label(term_window, text="Enter email:")
         term_label2.grid(row=1, column=0)
         search_entry = tk.Entry(term_window)
         search_entry.grid(row=1, column=1)
+        # Add a label for the new dropdown list
+        verify_label = tk.Label(term_window, text="Select verify type:")
+        verify_label.grid(row=2, column=0, columnspan=2)
 
+        # Add a dropdown list with bonus options
+        verify_options = ["Change email", "Send email"]
+        verify_combobox = ttk.Combobox(term_window, values=verify_options)
+        verify_combobox.grid(row=3, column=0, columnspan=2)
         def on_ok_click():
-            email_term = email_entry.get()
             search_term = search_entry.get()
+            email_term = email_entry.get()
+            verify_type = verify_combobox.get()  # Get the selected bonus type
             if not email_term or not search_term:
                 return
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/verifyaccount.py", email_term, search_term], shell=True)
-                thread = threading.Thread(target=verifyaccount.verifyaccount, args=(driver, email_term, search_term))
+                subprocess.Popen(["python", "work2/verifyaccount.py", search_term, email_term, verify_type], shell=True)
+                thread = threading.Thread(target=verifyaccount.verifyaccount, args=(driver, email_term, search_term, verify_type))
                 thread.start()
                 message = "Check answer and proceed!"
             except FileNotFoundError:
                 message = "Error: verifyaccount.py not found in work2 folder."
             label.config(text=message)
         ok_button = tk.Button(term_window, text="OK", command=on_ok_click)
-        ok_button.grid(row=2, column=0, columnspan=2)
-        email_entry.bind('<Return>', lambda event: on_ok_click())
+        ok_button.grid(row=4, column=0, columnspan=2)
         search_entry.bind('<Return>', lambda event: on_ok_click())
-        email_entry.focus_set()
+        email_entry.bind('<Return>', lambda event: on_ok_click())
+        search_entry.focus_set()
     elif button_name == "Closure":
         term_window = tk.Toplevel(root)
         term_window.title("Enter Search Term")
