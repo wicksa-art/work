@@ -24,7 +24,7 @@ def closure(driver, search_term):
         time.sleep(1)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
-        time.sleep(2)
+        time.sleep(3)
         elementi = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.fa.fa-pencil-square-o.ng-star-inserted')))
         driver.execute_script("arguments[0].click();", elementi)
         dropdownbutton = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-secondary.filter-dropdown')))

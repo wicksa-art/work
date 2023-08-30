@@ -28,7 +28,7 @@ def applyfreespins(driver, search_term, input_text):
         time.sleep(1)
         player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
-        time.sleep(1)
+        time.sleep(3)
         # flag
         span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
         img = span.find_element(By.TAG_NAME, "img")
