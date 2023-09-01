@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import tkinter as tk
 from tkinter import messagebox
 
-def closure(driver, search_term):
+def closure(driver, search_term, closure_type):
     try:
         i_element = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "#applyBonusModalHeader h6 button i")))
@@ -43,7 +43,10 @@ def closure(driver, search_term):
         driver.execute_script("arguments[0].click();", lockr)
         reasontext = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'changeLockStatusComment')))
         driver.execute_script("arguments[0].click();", reasontext)
-        reasontext.send_keys("Account closure request")
+        if closure_type == "Closure":
+            reasontext.send_keys("Account closure request")
+        elif closure_type == "Gambling addiction":
+            reasontext.send_keys("Account closure request, gambling addiction")
         text_to_copy = "Your account is closed\nHave a great day!"
         pyperclip.copy(text_to_copy)
         pass

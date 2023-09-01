@@ -127,14 +127,23 @@ def on_button_click(button_name):
         term_label.grid(row=0, column=0, columnspan=2)
         search_entry = tk.Entry(term_window)
         search_entry.grid(row=1, column=0, columnspan=2)
+        # Add a label for the new dropdown list
+        closure_label = tk.Label(term_window, text="Select closure type:")
+        closure_label.grid(row=2, column=0, columnspan=2)
+
+        # Add a dropdown list with bonus options
+        closure_options = ["Closure", "Gambling addiction"]
+        closure_combobox = ttk.Combobox(term_window, values=closure_options)
+        closure_combobox.grid(row=3, column=0, columnspan=2)
         def on_ok_click():
             if not search_entry.get():
                 return
             search_term = search_entry.get()
+            closure_type = closure_combobox.get()  # Get the selected bonus type
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/closure.py", search_term], shell=True)
-                thread = threading.Thread(target=closure.closure, args=(driver, search_term))
+                subprocess.Popen(["python", "work2/closure.py", search_term, closure_type], shell=True)
+                thread = threading.Thread(target=closure.closure, args=(driver, search_term, closure_type))
                 thread.start()
                 message = "Press Apply to proceed!"
             except FileNotFoundError:
