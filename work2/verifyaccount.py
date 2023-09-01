@@ -40,4 +40,6 @@ def verifyaccount(driver, search_term, email_term, verify_type):
             email_button = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, '.glyphicon')))
             driver.execute_script("arguments[0].click();", email_button)
+            text_to_copy = "Done, I've sent you another activation email, make sure to check junk/spam folder\nAlso I would like to remind you that there is a 125% bonus and up to 100 free spins on your first deposit\nAnything else I can help you with?"
+            pyperclip.copy(text_to_copy)
     pass
