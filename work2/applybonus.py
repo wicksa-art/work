@@ -15,6 +15,10 @@ def applybonus(driver, search_term, bonus_type):
         print("X not found on page")
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
+        dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+        dropdown_button.click()
+        email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+        email_span.click()
         search_field = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         driver.execute_script("arguments[0].click();", search_field)

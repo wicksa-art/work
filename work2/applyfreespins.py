@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 
 found_items = []  # Store detected items here
 
@@ -19,6 +20,10 @@ def applyfreespins(driver, search_term, input_text):
         print("X not found on page")
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
+        dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+        dropdown_button.click()
+        email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+        email_span.click()
         search_field = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         search_field.click()
@@ -59,11 +64,11 @@ def applyfreespins(driver, search_term, input_text):
         driver.execute_script("arguments[0].click();", span_element)
         time.sleep(1)
         if ("assets/flags/ca.svg" in src) or ("assets/flags/no.svg" in src) or ("assets/flags/in.svg" in src):
-            option_element = WebDriverWait(driver, 10).until(
+            option_element = WebDriverWait(driver, 2).until(
                 EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Spinomenal']")))
             driver.execute_script("arguments[0].click();", option_element)
             time.sleep(1)
-            second_span_element = WebDriverWait(driver, 10).until(
+            second_span_element = WebDriverWait(driver, 2).until(
                 EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a game']")))
             driver.execute_script("arguments[0].click();", second_span_element)
             time.sleep(1)
