@@ -13,7 +13,12 @@ from work2 import applyfreespins
 from work2 import applybonus
 from work2 import verifyaccount
 from work2 import closure
-
+import time
+def refresh_page_and_clear_cookies_periodically():
+    while True:
+        time.sleep(3600)  # Sleep for 1 hour
+        driver.delete_all_cookies()  # Clear cookies
+        driver.refresh()  # Refresh the page
 def on_button_click(button_name):
     message = ""
     if button_name == "Apply Bonus":
@@ -165,6 +170,9 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 service = Service(r'C:\\Users\\kleym\\Documents\\GitHub\\scripts\\chromedriver-win32\\chromedriver.exe')
 driver = webdriver.Chrome(service=service, options=options)
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
+refresh_thread = threading.Thread(target=refresh_page_and_clear_cookies_periodically)
+refresh_thread.daemon = True  # This ensures the thread will exit when the main program exits
+refresh_thread.start()
 username_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'username')))
 username_field.send_keys('peterk')
 password_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'password')))

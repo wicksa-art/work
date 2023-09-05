@@ -9,7 +9,6 @@ from selenium.common.exceptions import NoSuchElementException
 
 found_items = []  # Store detected items here
 
-
 def applyfreespins(driver, search_term, input_text):
     try:
         i_element = WebDriverWait(driver, 1).until(
