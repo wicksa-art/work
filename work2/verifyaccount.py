@@ -16,32 +16,32 @@ def verifyaccount(driver, search_term, email_term, verify_type):
         print("X not found on page")
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
-        dropdown_button = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+        dropdown_button = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
         dropdown_button.click()
-        email_span = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+        email_span = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
         email_span.click()
-        search_field = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
+        search_field = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         driver.execute_script("arguments[0].click();", search_field)
         search_field.clear()
         search_field.send_keys(search_term)
-        success_button = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
+        success_button = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         driver.execute_script("arguments[0].click();", success_button)
         time.sleep(1)
-        player_link = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
+        player_link = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
         time.sleep(3)
-        first_div = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' FULL PROFILE ']")))
+        first_div = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' FULL PROFILE ']")))
         driver.execute_script("arguments[0].click();", first_div)
         if verify_type == "Change email":
-            second_div = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//i[contains(@class, "fa fa-question-circle")]/following::div[contains(@class, "ng-star-inserted")][1]')))
+            second_div = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, '//i[contains(@class, "fa fa-question-circle")]/following::div[contains(@class, "ng-star-inserted")][1]')))
             second_div.click()
-            email_change = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.NAME, 'profileEmail')))
+            email_change = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.NAME, 'profileEmail')))
             email_change.clear()
             email_change.send_keys(email_term)
             text_to_copy = "Done, I've sent you another activation email, make sure to check junk/spam folder\nAlso I would like to remind you that there is a 125% bonus and up to 100 free spins on your first deposit\nAnything else I can help you with?"
             pyperclip.copy(text_to_copy)
         elif verify_type == "Send email":
-            email_button = WebDriverWait(driver, 1).until(
+            email_button = WebDriverWait(driver, 3).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, '.glyphicon')))
             driver.execute_script("arguments[0].click();", email_button)
             text_to_copy = "Done, I've sent you another activation email, make sure to check junk/spam folder\nAlso I would like to remind you that there is a 125% bonus and up to 100 free spins on your first deposit\nAnything else I can help you with?"
