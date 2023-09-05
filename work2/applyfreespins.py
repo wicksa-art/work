@@ -19,20 +19,20 @@ def applyfreespins(driver, search_term, input_text):
         print("X not found on page")
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
-        dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+        dropdown_button = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
         dropdown_button.click()
-        email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+        email_span = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
         email_span.click()
-        search_field = WebDriverWait(driver, 10).until(
+        search_field = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         search_field.click()
         search_field.clear()
         search_field.send_keys(search_term)
-        success_button = WebDriverWait(driver, 10).until(
+        success_button = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         driver.execute_script("arguments[0].click();", success_button)
         time.sleep(2)
-        player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
+        player_link = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
         time.sleep(2)
         # flag
@@ -49,16 +49,16 @@ def applyfreespins(driver, search_term, input_text):
             print("Yes, the currency is ZAR0.00")
         else:
             print("No, the currency is not ZAR0.00")
-        first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' APPLY BONUS ']")))
+        first_div = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' APPLY BONUS ']")))
         driver.execute_script("arguments[0].click();", first_div)
-        second_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' Free Round ']")))
+        second_div = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' Free Round ']")))
         driver.execute_script("arguments[0].click();", second_div)
         time.sleep(3)
         input_element = driver.find_element(By.CSS_SELECTOR, 'input[matinput][required]')
         driver.execute_script("arguments[0].click();", input_element)
         input_element.clear()
         input_element.send_keys(input_text)
-        span_element = WebDriverWait(driver, 10).until(
+        span_element = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a subProduct']")))
         driver.execute_script("arguments[0].click();", span_element)
         time.sleep(1)
@@ -77,23 +77,23 @@ def applyfreespins(driver, search_term, input_text):
                 first_element = all_elements[0]
                 classes = first_element.get_attribute("class").split(' ')
                 if 'fa-desktop' in classes:
-                    option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                    option_element = WebDriverWait(driver, 1).until(EC.element_to_be_clickable(
                         (By.XPATH, "//mat-option/span/span[normalize-space()='Book of Tusk Casino']")))
                     driver.execute_script("arguments[0].click();", option_element)
                     text_to_copy = "Your free spins are in Book of TuskCasino, good luck!\nAnything else I can help you with?"
                     pyperclip.copy(text_to_copy)
                 elif ('fa-mobile-phone' in classes) or ([] in classes):
-                    option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                    option_element = WebDriverWait(driver, 1).until(EC.element_to_be_clickable(
                         (By.XPATH, "//mat-option/span/span[normalize-space()='Book of Tusk Casino_Mobile']")))
                     driver.execute_script("arguments[0].click();", option_element)
                     text_to_copy = "Your free spins are in Book of TuskCasino, good luck!\nAnything else I can help you with?"
                     pyperclip.copy(text_to_copy)
         else:
-            option_element = WebDriverWait(driver, 10).until(
+            option_element = WebDriverWait(driver, 1).until(
                 EC.element_to_be_clickable((By.XPATH, "//mat-option/span[normalize-space()='Platipus']")))
             driver.execute_script("arguments[0].click();", option_element)
             time.sleep(1)
-            second_span_element = WebDriverWait(driver, 10).until(
+            second_span_element = WebDriverWait(driver, 1).until(
                 EC.element_to_be_clickable((By.XPATH, "//span[text()='Select a game']")))
             driver.execute_script("arguments[0].click();", second_span_element)
             time.sleep(1)
@@ -105,13 +105,13 @@ def applyfreespins(driver, search_term, input_text):
                 first_element = all_elements[0]
                 classes = first_element.get_attribute("class").split(' ')
                 if 'fa-desktop' in classes:
-                    option_element = WebDriverWait(driver, 10).until(
+                    option_element = WebDriverWait(driver, 1).until(
                         EC.element_to_be_clickable((By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin']")))
                     driver.execute_script("arguments[0].click();", option_element)
                     text_to_copy = "Your free spins are in Wild Spin, good luck!\nAnything else I can help you with?"
                     pyperclip.copy(text_to_copy)
                 elif ('fa-mobile-phone' in classes) or ([] in classes):
-                    option_element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                    option_element = WebDriverWait(driver, 1).until(EC.element_to_be_clickable(
                         (By.XPATH, "//mat-option/span/span[normalize-space()='Wild Spin_Mobile']")))
                     driver.execute_script("arguments[0].click();", option_element)
                     text_to_copy = "Your free spins are in Wild Spin, good luck!\nAnything else I can help you with?"

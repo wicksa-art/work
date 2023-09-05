@@ -15,28 +15,28 @@ def applybonus(driver, search_term, bonus_type):
         print("X not found on page")
     finally:
         driver.get('https://core.altbetexchange.com/core/#/app/core/players/search')
-        dropdown_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
+        dropdown_button = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Contains") and contains(@class, "dropdown-toggle") and contains(@class, "btn") and contains(@class, "btn-default") and contains(@class, "btn-block") and contains(@class, "filter-dropdown")]')))
         dropdown_button.click()
-        email_span = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
+        email_span = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, '//span[text()="Equals"]')))
         email_span.click()
-        search_field = WebDriverWait(driver, 10).until(
+        search_field = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'input[autofocus="true"]')))
         driver.execute_script("arguments[0].click();", search_field)
         search_field.clear()
         search_field.send_keys(search_term)
-        success_button = WebDriverWait(driver, 10).until(
+        success_button = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.btn.btn-sm.btn-success')))
         driver.execute_script("arguments[0].click();", success_button)
         time.sleep(1)
-        player_link = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
+        player_link = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.player-link')))
         driver.execute_script("arguments[0].click();", player_link)
         time.sleep(3)
         span = driver.find_element(By.CSS_SELECTOR, "span.flag-icon")
         img = span.find_element(By.TAG_NAME, "img")
         src = img.get_attribute("src")
-        first_div = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' APPLY BONUS ']")))
+        first_div = WebDriverWait(driver, 1).until(EC.element_to_be_clickable((By.XPATH, "//div[text()=' APPLY BONUS ']")))
         driver.execute_script("arguments[0].click();", first_div)
-        second_div = WebDriverWait(driver, 10).until(
+        second_div = WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.XPATH, "//div[text()=' Manual Bonus ']")))
         driver.execute_script("arguments[0].click();", second_div)
         time.sleep(2)
