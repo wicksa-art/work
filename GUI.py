@@ -3,9 +3,9 @@ import tkinter as tk
 import subprocess
 import threading
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from tkinter import ttk
@@ -165,10 +165,10 @@ buttons = ["Apply Bonus", "Apply Free Spins", "Verify Account", "Closure"]
 for button_name in buttons:
     button = tk.Button(root, text=button_name, command=lambda name=button_name: on_button_click(name))
     button.pack()
-options = Options()
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
-service = Service(r'C:\\Users\\kleym\\Documents\\GitHub\\scripts\\chromedriver-win32\\chromedriver.exe')
-driver = webdriver.Chrome(service=service, options=options)
+
+
+
+driver = webdriver.Safari()
 driver.get('https://chrome.google.com/webstore/detail/super-dark-mode/nlgphodeccebbcnkgmokeegopgpnjfkc/related?utm_source=ext_app_menu')
 time.sleep(5)
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
