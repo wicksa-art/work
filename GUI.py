@@ -167,7 +167,7 @@ for button_name in buttons:
     button.pack()
 options = Options()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-service = Service(r'C:\\Users\\kleym\\Documents\\GitHub\\scripts\\chromedriver-win32\\chromedriver.exe')
+service = Service(r'/Users/kleym/Documents/GitHub/work/chromedriver-mac-x64/chromedriver')
 driver = webdriver.Chrome(service=service, options=options)
 driver.get('https://chrome.google.com/webstore/detail/super-dark-mode/nlgphodeccebbcnkgmokeegopgpnjfkc/related?utm_source=ext_app_menu')
 time.sleep(5)
