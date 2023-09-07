@@ -44,7 +44,7 @@ def on_button_click(button_name):
             bonus_type = bonus_combobox.get()  # Get the selected bonus type
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/applybonus.py", search_term, bonus_type], shell=True)
+                subprocess.Popen(["python3", "work2/applybonus.py", search_term, bonus_type], shell=True)
                 thread = threading.Thread(target=applybonus.applybonus, args=(driver, search_term, bonus_type))
                 thread.start()
                 message = "Press Apply to proceed!"
@@ -74,7 +74,7 @@ def on_button_click(button_name):
                 return
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/applyfreespins.py", search_term, input_text], shell=True)
+                subprocess.Popen(["python3", "work2/applyfreespins.py", search_term, input_text], shell=True)
                 thread = threading.Thread(target=applyfreespins.applyfreespins, args=(driver, search_term, input_text))
                 thread.start()
                 message = "Press Apply to proceed!"
@@ -113,7 +113,7 @@ def on_button_click(button_name):
                 return
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/verifyaccount.py", search_term, email_term, verify_type], shell=True)
+                subprocess.Popen(["python3", "work2/verifyaccount.py", search_term, email_term, verify_type], shell=True)
                 thread = threading.Thread(target=verifyaccount.verifyaccount, args=(driver, search_term, email_term, verify_type))
                 thread.start()
                 message = "Check answer and proceed!"
@@ -147,7 +147,7 @@ def on_button_click(button_name):
             closure_type = closure_combobox.get()  # Get the selected bonus type
             term_window.destroy()
             try:
-                subprocess.Popen(["python", "work2/closure.py", search_term, closure_type], shell=True)
+                subprocess.Popen(["python3", "work2/closure.py", search_term, closure_type], shell=True)
                 thread = threading.Thread(target=closure.closure, args=(driver, search_term, closure_type))
                 thread.start()
                 message = "Press Apply to proceed!"
@@ -167,8 +167,8 @@ for button_name in buttons:
     button.pack()
 options = Options()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-service = Service(r'/Users/kleym/Documents/GitHub/work/chromedriver-mac-x64/chromedriver')
-driver = webdriver.Chrome(service=service, options=options)
+service = Service(r'/Users/kleym/Documents/GitHub/work/msedgedriver')
+driver = webdriver.Edge(service=service, options=options)
 driver.get('https://chrome.google.com/webstore/detail/super-dark-mode/nlgphodeccebbcnkgmokeegopgpnjfkc/related?utm_source=ext_app_menu')
 time.sleep(5)
 driver.get('https://core.altbetexchange.com/core/#/login/staff')
